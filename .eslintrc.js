@@ -2,7 +2,8 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
-    jest: true
+    jest: true,
+    jquery: true
   },
   extends: [
     'standard'
@@ -11,5 +12,5 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  ignorePatterns: ['dist']
+  ignorePatterns: ['dist', '*.html']
 }
