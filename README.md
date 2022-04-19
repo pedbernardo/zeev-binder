@@ -40,11 +40,11 @@ yarn add zeev-binder
 ### Usar via CDN
 Apenas adicione a script tag ao cabeçalho do processo e inicialize o binder  através do _construtor_ Binder
 ```html
-<script src="https://cdn.jsdelivr.net/gh/pedbernardo/orquestra-binder@latest/dist/zeev-binder.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/pedbernardo/zeev-binder@latest/dist/binder.js"></script>
 
 <!-- ou minificado -->
 
-<script src="https://cdn.jsdelivr.net/gh/pedbernardo/orquestra-binder@latest/dist/zeev-binder.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/pedbernardo/zeev-binder@latest/dist/binder.min.js"></script>
 ```
 
 <br>
