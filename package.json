@@ -9,7 +9,7 @@
     "dev": "rollup -c -w",
     "prebuild": "rimraf dist",
     "build": "rollup -c",
-    "lint": "eslint src/**/*.js --max-warnings=0 --fix",
+    "lint": "eslint . --max-warnings=0 --fix",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -28,7 +28,7 @@
     "form"
   ],
   "author": "Pedro Bernardo <pedrovbernardo@gmail.com>",
-  "license": "LGPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pedbernardo/zeev-binder/issues"
   },
