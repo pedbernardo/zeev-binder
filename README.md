@@ -24,6 +24,13 @@
   <a href="#Roadmap">Roadmap</a>
 </p>
 
+<p align="center">
+  <img
+    src="./img/example.gif"
+    alt="Zeev Binder running example on screen"
+  >
+</p>
+
 <br>
 
 ## Instalação
