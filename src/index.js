@@ -7,7 +7,6 @@ import { Template } from './directives/template'
 
 export default function Binder (params = {}) {
   const config = {
-    // ...defaults, ?
     ...params,
     name: NAME,
     root: createContext(params.root),
