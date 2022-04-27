@@ -33,6 +33,41 @@
 
 <br>
 
+<details>
+  <summary>Veja o código do exemplo acima</summary>
+  
+  #### Formulário
+  ```html
+  <h1>🎭 Zeev Binder</h1>
+  <p>O que é data-binding?</p>
+
+  <div class="o-columns u-margin-top-10">
+    <div class="o-column">
+      <div class="o-form-group">
+        <label class="o-form-label">CNPJ</label>
+        <p class="o-form-label-help">Exemplo: 59539586000100</p>
+        <div class="o-form-ctrl">{Campo.campoTexto}</div>
+      </div>
+    </div>
+
+    <div class="o-column">
+      <span>O valor do campo aparecerá aqui:</span>
+      <h3>{{ campoTexto | cnpj }}</h3>
+      <span>Mas pode aparecer em outros lugares</span>
+      <small>{{ campoTexto | cnpj }}</small>
+    </div>
+  </div>
+  ```
+  #### Javascript
+  ```js
+  import Binder from 'zeev-binder'
+
+  Binder().init()
+  ```
+</details>
+
+<br>
+
 ## Instalação
 ### Usar via NPM
 
@@ -116,7 +151,7 @@ Binder().init()
 **Configuração Padrão**
 ```js
 const config = {
-  root: '#BoxFrmExecute' || document.body,
+  root: document.getElementById('BoxFrmExecute') || document.body,
   filters: { ... } // ver seção sobre filtros
 }
 ```
@@ -136,9 +171,147 @@ const binder = Binder({
 binder.init()
 ```
 
-#### _TODO_
-- descrever funcionamento de filtros e filtros padrão
-- descrever funcionamento e restrições com uso de tabelas multivaloradas
+#### Parâmetros
+> _BinderConfig (Object)_
+
+<br>
+
+- _BinderConfig.root ( HTMLElement )_<br>
+**Default:** document.getElementById('BoxFrmExecute') || document.body<br>
+Elemento raíz a partir de onde será aplicado o binder
+
+- _BinderConfig.filters ( Ojbect )_<br>
+Objeto com funções / métodos customizados para serem consumidas como filtros
+
+<br>
+
+### Filtros
+Existem alguns filtros pré-definidos que podem ser utilizados sem nenhum configuração extra, veja as funções em [filtres.js](./src/utils/filters.js).
+
+<br>
+
+#### `cnpj`
+Adiciona máscara de CNPJ a um número de 14 caracteres
+
+> 59539586000100 => 59.539.586.0001-00
+
+**Exemplo de uso**
+```html
+{{ meuCampo | cnpj}}
+<span data-bind="meuCampo" data-filter="cnpj">
+```
+
+<br>
+
+#### `capitalize`
+Capitalize um texto, tornando todas as letras iniciais em maiúsculas
+
+> minha frase EXEMPLO => Minha Frase Exemplo
+
+**Exemplo de uso**
+```html
+{{ meuCampo | capitalize}}
+<span data-bind="meuCampo" data-filter="capitalize">
+```
+
+<br>
+
+#### `firstWord`
+Extrai apenas a primeira palavra de um texto
+
+> João da Silva Sauro => João
+
+**Exemplo de uso**
+```html
+{{ meuCampo | firstWord}}
+<span data-bind="meuCampo" data-filter="firstWord">
+```
+
+<br>
+
+#### `empty`
+Quando o texto for vazio, preenche com o caractere "-"
+
+**Exemplo de uso**
+```html
+{{ umCampoMonetario | empty}}
+<span data-bind="umCampoMonetario" data-filter="empty">
+```
+
+<br>
+
+#### `hour`
+Apenas adiciona ao final do texto a letra "h"
+
+> 120 => 120h
+
+**Exemplo de uso**
+```html
+{{ meuCampo | hour}}
+<span data-bind="meuCampo" data-filter="hour">
+```
+
+<br>
+
+#### `currency`
+Formata um número para o formato monetário em pt-BR, quando o campo for vazio ou 0 retorna apenas "-" 
+
+> 1500 => 1.500,00
+> 1511500.2 => 1.511.500,20
+> 0 => -
+
+**Exemplo de uso**
+```html
+{{ meuCampo | currency}}
+<span data-bind="meuCampo" data-filter="currency">
+```
+
+<br>
+
+#### Criando Novos Filtros
+
+Para criar novos filtros é simples, basta criar novas funções dentro na propridade `filters` do parâmetro de configuração do método construtor.
+
+As funções presentes no filter sempre recebem do Binder como parâmetro o valor atual do campo, e devem retornar o valor que será apresentado nos binds do formulário (no html).
+
+**Exemplo**
+```js
+Binder({
+  filters: {
+    nomeDoMeuFiltro (valorDoCampo) {
+      // faça as transformações desejadas
+      // e então retone o valor transformado
+      return valorDoCampo * 2
+    },
+    outroFiltro (valor) {
+      return `R$ ${valor}`
+    },
+    tagCriticidade (valor) {
+      // com o uso do `data-bind` é possível
+      // retornar uma string html que será adicionada
+      // ao formulário (DOM) e ainda combinar com
+      // condicionais
+      if (valor === 'Crítico') {
+        return `<span class="tag danger">${valor}</span>`
+      } else {
+        return `<span class="tag">${valor}</span>`
+      }
+    }
+  }
+}).init()
+```
+
+Após definidos os filtros, basta utilizá-los assim como os filtros padrão, veja no exemplo a utilização dos filtros criados no exemplo acima.
+
+```html
+{{ meuCampo | nomeDoMeuFiltro }}<br>
+{{ meuOutroCampo | outroFiltro }}<br>
+
+<div
+  data-bind="campoCriticidade"
+  data-filter="tagCriticidade"
+></div>
+```
 
 <br>
 <br>
@@ -202,6 +375,7 @@ binder.destroy()
 - Adicionar testes unitários
 - Implementar métodos update e destroy
 - Implementar adição de propriedade ao finalizar inicialização (facilitar criação de loaders)
+- Avaliar implementação de skeletons com uso de {{ }}
 - Finalizar documentação no README
 - Construir documentação utilizando Vitepress
 - Automatizar build com uso de Github Actions
