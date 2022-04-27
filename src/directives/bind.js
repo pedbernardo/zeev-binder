@@ -41,8 +41,6 @@ export function Bind (config) {
        * change input values directly by jQuery or without fire
        * the proper events, like `SUGGESTION` and `DATA` types,
        * or side effects ran by datasource mapping.
-       *
-       * @todo Test alternative with MutationObserver or ObjectDefine
        */
       jQuery(field).on(events, () =>
         setValue({ fields, element, filter })
