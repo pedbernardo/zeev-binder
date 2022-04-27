@@ -165,10 +165,14 @@ Cria uma nova instância do Binder com as configurações informadas
 **Exemplo de uso**
 ```js
 const binder = Binder({
-  root: '#my-custom-root-element'
+  root: '#my-custom-root-element',
+  filters: {}
 })
 
 binder.init()
+
+// ou simplesmente
+Binder().init()
 ```
 
 #### Parâmetros
