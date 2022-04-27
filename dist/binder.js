@@ -45,16 +45,18 @@
     });
 
   function cnpj (value) {
-    return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d)/, '$1.$2.$3/$4-$5')
+    return value.length === 14
+      ? value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d)/, '$1.$2.$3/$4-$5')
+      : value
   }
 
-  function titleCase (value) {
+  function capitalize (value) {
     return value
       .toLowerCase()
       .split(' ')
-      .map(word => {
-        return word.charAt(0).toUpperCase() + word.slice(1)
-      }).join(' ')
+      .map(word =>
+        word.charAt(0).toUpperCase() + word.slice(1)
+      ).join(' ')
   }
 
   function firstWord (value) {
@@ -83,7 +85,7 @@
 
   const defaultFilters = {
     cnpj,
-    titleCase,
+    capitalize,
     firstWord,
     empty,
     hour,
@@ -205,8 +207,6 @@
          * change input values directly by jQuery or without fire
          * the proper events, like `SUGGESTION` and `DATA` types,
          * or side effects ran by datasource mapping.
-         *
-         * @todo Test alternative with MutationObserver or ObjectDefine
          */
         jQuery(field).on(events, () =>
           setValue({ fields, element, filter })
@@ -311,8 +311,6 @@
          * change input values directly by jQuery or without fire
          * the proper events, like `SUGGESTION` and `DATA` types,
          * or side effects ran by datasource mapping.
-         *
-         * @todo Test alternative with MutationObserver or ObjectDefine
          */
         jQuery(field).on(events, () =>
           parseNodeText(node, { data })
@@ -323,7 +321,6 @@
 
   function Binder (params = {}) {
     const config = {
-      // ...defaults, ?
       ...params,
       name: NAME,
       root: createContext(params.root),
