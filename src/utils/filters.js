@@ -5,16 +5,18 @@ const currencyFormatter = new Intl.NumberFormat(
   })
 
 function cnpj (value) {
-  return value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d)/, '$1.$2.$3/$4-$5')
+  return value.length === 14
+    ? value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d)/, '$1.$2.$3/$4-$5')
+    : value
 }
 
-function titleCase (value) {
+function capitalize (value) {
   return value
     .toLowerCase()
     .split(' ')
-    .map(word => {
-      return word.charAt(0).toUpperCase() + word.slice(1)
-    }).join(' ')
+    .map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ')
 }
 
 function firstWord (value) {
@@ -43,7 +45,7 @@ function currency (number) {
 
 export const defaultFilters = {
   cnpj,
-  titleCase,
+  capitalize,
   firstWord,
   empty,
   hour,
