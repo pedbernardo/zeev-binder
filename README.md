@@ -174,8 +174,6 @@ binder.init()
 #### Parâmetros
 > _BinderConfig (Object)_
 
-<br>
-
 - _BinderConfig.root ( HTMLElement )_<br>
 **Default:** document.getElementById('BoxFrmExecute') || document.body<br>
 Elemento raíz a partir de onde será aplicado o binder
@@ -186,7 +184,7 @@ Objeto com funções / métodos customizados para serem consumidas como filtros
 <br>
 
 ### Filtros
-Existem alguns filtros pré-definidos que podem ser utilizados sem nenhum configuração extra, veja as funções em [filtres.js](./src/utils/filters.js).
+Existem alguns filtros pré-definidos que podem ser utilizados sem nenhum configuração extra, veja as funções em [filters.js](./src/utils/filters.js).
 
 <br>
 
@@ -257,7 +255,9 @@ Apenas adiciona ao final do texto a letra "h"
 Formata um número para o formato monetário em pt-BR, quando o campo for vazio ou 0 retorna apenas "-" 
 
 > 1500 => 1.500,00
+
 > 1511500.2 => 1.511.500,20
+
 > 0 => -
 
 **Exemplo de uso**
