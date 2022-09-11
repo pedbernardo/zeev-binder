@@ -40,7 +40,9 @@ export function getFieldValue (fields) {
   const type = field.type
 
   if (type === 'select-one') {
-    return field.options[field.selectedIndex].text
+    return !field.value
+      ? ''
+      : field.options[field.selectedIndex].text
   }
 
   if (type === 'radio') {
